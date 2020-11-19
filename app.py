@@ -11,20 +11,23 @@ def hello_world():
 @app.route('/data',methods=['GET','POST'])
 def receiveData():
     #print(request.args)
-    if request.method == 'POST':
-        uploaded_file = request.files['filename']
-        print(request.form)
-        if uploaded_file.filename != '':
-            uploaded_file.save(uploaded_file.filename)
-        #captcha_response=request.form['g-recaptcha-response']
-        # if(captcha_response==None or captcha_response==''):
-        #     return 'Please enter captcha'
-        image_path=os.getcwd()+"/"+uploaded_file.filename
-        model_path=os.getcwd()+"/Models/EN/EN.h5"
-        #image_path=os.getcwd()+"\\\\"+uploaded_file.filename
-        #model_path=os.getcwd()+"\\Models\\EN\\EN.h5"
-        print(image_path,'\n',model_path)
-        return getClass.load_image(image_path,model_path)
+    try:
+        if request.method == 'POST':
+            uploaded_file = request.files['filename']
+            print(request.form)
+            if uploaded_file.filename != '':
+                uploaded_file.save(uploaded_file.filename)
+            #captcha_response=request.form['g-recaptcha-response']
+            # if(captcha_response==None or captcha_response==''):
+            #     return 'Please enter captcha'
+            image_path=os.getcwd()+"/"+uploaded_file.filename
+            model_path=os.getcwd()+"/Models/EN/EN.h5"
+            #image_path=os.getcwd()+"\\\\"+uploaded_file.filename
+            #model_path=os.getcwd()+"\\Models\\EN\\EN.h5"
+            print(image_path,'\n',model_path)
+            return getClass.load_image(image_path,model_path)
+    except Exception as e:
+        return e
 
 if __name__ == '__main__':
     app.run()
