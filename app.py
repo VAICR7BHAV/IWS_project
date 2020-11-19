@@ -19,7 +19,10 @@ def receiveData():
         #captcha_response=request.form['g-recaptcha-response']
         # if(captcha_response==None or captcha_response==''):
         #     return 'Please enter captcha'
-        return getClass.load_image(os.getcwd()+"\\\\"+uploaded_file.filename,os.getcwd()+"\\Models\\EN\\EN.h5")
+        image_path=os.getcwd()+"\\\\"+uploaded_file.filename
+        model_path=os.getcwd()+"\\Models\\EN\\EN.h5"
+        print(image_path,'\n',model_path)
+        return getClass.load_image(image_path,model_path)
 
 if __name__ == '__main__':
     app.run()
