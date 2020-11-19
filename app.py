@@ -19,7 +19,7 @@ def receiveData():
         #captcha_response=request.form['g-recaptcha-response']
         # if(captcha_response==None or captcha_response==''):
         #     return 'Please enter captcha'
-        return getClass.load_image(os.getcwd()+"\\\\"+uploaded_file.filename,"D:\\Study\Monsoon_2020\\researchMethodsTrainedModels\\Exp2BN\\DenseNet\\DenseNet121.h5")
+        return getClass.load_image(os.getcwd()+"\\\\"+uploaded_file.filename,os.getcwd()+"\\Models\\EN\\EN.h5")
 
 if __name__ == '__main__':
     app.run()
