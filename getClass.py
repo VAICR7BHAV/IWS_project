@@ -1,7 +1,7 @@
 
 
 
-def load_image(img_path,model_path,show=False):
+def load_image(img_path,model,show=False):
     from keras.models import load_model
     from keras.preprocessing import image
     import matplotlib.pyplot as plt
@@ -20,7 +20,7 @@ def load_image(img_path,model_path,show=False):
         plt.show()
 
     # load model
-    model = keras.models.load_model(model_path)
+    #model = keras.models.load_model(model_path)
     # image path
     #img_path = '/media/data/dogscats/test1/19.jpg'      # cat
 
