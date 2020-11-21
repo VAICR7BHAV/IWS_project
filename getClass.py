@@ -19,21 +19,20 @@ def load_image(img_path,model,show=False):
         plt.axis('off')
         plt.show()
 
-    # load model
-    #model = keras.models.load_model(model_path)
-    # image path
-    #img_path = '/media/data/dogscats/test1/19.jpg'      # cat
-
     # load a single image
     new_image = img_tensor
 
     # check prediction
     var=model.predict(new_image)
+    print("numpy",var)
+    dict = {}
+    for i in range(0,len(var[0])):
+        print(var[0][i])
+        if(i==0):
+            dict['Cardiomegaly']=str(var[0][i]*100)[0:5]+"%"
+        if(i==1):
+            dict['Consolidation']=str(var[0][i]*100)[0:5]+"%"
+        if(i==2):
+            dict['Pneumothorax']=str(var[0][i]*100)[0:5]+"%"
     var=(np.argmax(var, axis=1)[0])
-
-    if(var==2):
-      return 'Pneumothorax'
-    if(var==1):
-      return 'Consolidation'
-    if(var==0):
-      return 'Cardiomegaly'
+    return dict
