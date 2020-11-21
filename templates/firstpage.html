@@ -141,7 +141,7 @@ border-radius: 12px;
 <center>
 <div class="card">
   <br>
-<p class="custom1">Enter the URL</p>
+<p class="custom1">Upload the Image</p>
 <center>
 
 
@@ -151,6 +151,7 @@ border-radius: 12px;
 <form method="POST" action="/data" enctype="multipart/form-data">
   <input type="file" id="myFile" name="filename" accept="image/*">
 <br>
+ <p>Select the Architecture</p>
 <select name="website">
  <option value="resNet">Resnet</option>
  <option value="efficientNet">Efficient Net</option>
@@ -158,9 +159,7 @@ border-radius: 12px;
 </select>
 <br>
 <br>
-<br>
 <button class="button" type='submit'>ANALYZE</button>
-<br>
 <br>
 <br>
 <script src='https://www.google.com/recaptcha/api.js'></script>
