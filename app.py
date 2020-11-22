@@ -3,7 +3,7 @@ import getClass
 import os,keras
 app = Flask(__name__)
 EN_model=keras.models.load_model(os.getcwd()+"/Models/EN/EN.h5")
-
+DN_model=keras.models.load_model(os.getcwd()+"/Models/DN/DN.h5")
 @app.route('/')
 def hello_world():
     return render_template('firstpage.html')
@@ -13,7 +13,8 @@ def receiveData():
     try:
         if request.method == 'POST':
             uploaded_file = request.files['filename']
-            print(request.form)
+            #print(request.form)
+            chosen_model=request.form['website']
             if uploaded_file.filename != '':
                 uploaded_file.save(os.getcwd()+'/images/'+uploaded_file.filename)
             captcha_response=request.form['g-recaptcha-response']
@@ -21,7 +22,12 @@ def receiveData():
                 return render_template('Invalid_Profile.html')
             image_path=os.getcwd()+"/images/"+uploaded_file.filename
             print(image_path,'\n')
-            predictedClass=getClass.load_image(image_path,EN_model)
+            if(chosen_model=='efficientnet'):
+                predictedClass=getClass.load_image(image_path,EN_model)
+            elif(chosen_model=='densenet'):
+                predictedClass=getClass.load_image(image_path,DN_model)
+            else:
+                return render_template('Invalid_Profile.html')
             return render_template('simplpc-4.html',
                                    cardiomegaly=predictedClass['Cardiomegaly'],
                                    consolidation=predictedClass['Consolidation'],
