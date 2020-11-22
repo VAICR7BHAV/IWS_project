@@ -1,6 +1,4 @@
 
-
-
 def load_image(img_path,model,show=False):
     from keras.models import load_model
     from keras.preprocessing import image
@@ -29,10 +27,10 @@ def load_image(img_path,model,show=False):
     for i in range(0,len(var[0])):
         print(var[0][i])
         if(i==0):
-            dict['Cardiomegaly']=str(var[0][i]*100)[0:5]+"%"
+            dict['cardiomegaly']=var[0][i]
         if(i==1):
-            dict['Consolidation']=str(var[0][i]*100)[0:5]+"%"
+            dict['consolidation']=var[0][i]
         if(i==2):
-            dict['Pneumothorax']=str(var[0][i]*100)[0:5]+"%"
+            dict['pneumothorax']=var[0][i]
     var=(np.argmax(var, axis=1)[0])
     return dict
