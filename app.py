@@ -3,8 +3,8 @@ import getClass
 import os,keras
 import cv2
 import numpy as np
-import tensorflow as tf
 from keras.preprocessing import image
+import tensorflow as tf
 from tensorflow.keras.models import load_model
 
 app = Flask(__name__)
@@ -114,6 +114,6 @@ def receiveData():
     #     return e
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0",port=3000,debug=True)
+    app.run(host="0.0.0.0",port=3000)
 
 #kill -9 $(ps -A | grep python | awk '{print $1}')
