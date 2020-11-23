@@ -254,17 +254,10 @@
     <div class="row">
             <p class="custom">Class Predictions</p>
             <br>
-            <p>{{ cardiomegaly }}</p>
-            <h4><b>Cardiomegaly</b></h4>
 
-            <p>{{ consolidation }}</p>
-            <h4><b>Consolidation</b></h4>
-
-            <p>{{ pneumothorax}}</p>
-            <h4><b>Pneumothorax</b></h4>
       </div>
-
-      <div id="piechart"></div>
+      <center>
+          <div id="piechart"></div>
 
   		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
@@ -274,18 +267,16 @@
 			google.charts.setOnLoadCallback(drawChart);
 
 
-function drawChart() {
-  var data = google.visualization.arrayToDataTable(object);
-
-
-  var options = { 'width':400, 'height':400};
-
-
-
+        function drawChart()
+        {
+            var data = google.visualization.arrayToDataTable(object);
+            var options = {'backgroundColor':'transparent',
+            is3D:true,chartArea:{width:'100%',height:'100%'}};
   			var chart = new google.visualization.PieChart(document.getElementById('piechart'));
   			chart.draw(data, options);
 			}
 		</script>
+      </center>
     </div>
 </center>
 </body>

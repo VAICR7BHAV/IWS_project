@@ -15,6 +15,7 @@ from tensorflow.keras.models import load_model
 app = Flask(__name__)
 EN_model=keras.models.load_model(os.getcwd()+"/Models/EN/EN.h5")
 DN_model=keras.models.load_model(os.getcwd()+"/Models/DN/DN.h5")
+resnet_model=keras.models.load_model(os.getcwd()+"/Models/Resnet/resnet.h5")
 
 diseaseToClassMap={}
 diseaseToClassMap['cardiomegaly']=0
@@ -110,7 +111,9 @@ def receiveData():
                 bestClass = getBestClass(predictedClass)
                 GradCAM(image_path, DN_model, 'densenet', diseaseToClassMap[bestClass])
             else:
-                return render_template('Invalid_Profile.html')
+                predictedClass = getClass.load_image(image_path, resnet_model)
+                bestClass = getBestClass(predictedClass)
+                GradCAM(image_path, resnet_model, 'resnet', diseaseToClassMap[bestClass])
             im = Image.open("GRADCAM.jpg")
             data = io.BytesIO()
             im.save(data, "JPEG")
