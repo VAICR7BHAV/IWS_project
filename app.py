@@ -15,7 +15,7 @@ from tensorflow.keras.models import load_model
 app = Flask(__name__)
 EN_model=keras.models.load_model(os.getcwd()+"/Models/EN/EN.h5")
 DN_model=keras.models.load_model(os.getcwd()+"/Models/DN/DN.h5")
-resnet_model=keras.models.load_model(os.getcwd()+"/Models/Resnet/resnet.h5")
+resnet_model=keras.models.load_model(os.getcwd()+"/Models/DN/DN.h5")
 
 diseaseToClassMap={}
 diseaseToClassMap['cardiomegaly']=0
