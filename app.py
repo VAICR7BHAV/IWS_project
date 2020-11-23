@@ -106,7 +106,7 @@ def receiveData():
                 predictedClass=getClass.load_image(image_path,EN_model)
                 bestClass = getBestClass(predictedClass)
                 GradCAM(image_path, EN_model, 'efficientnet', diseaseToClassMap[bestClass])
-            elif(chosen_model=='densenet'):
+            elif(chosen_model=='densenet' or chosen_model=='resnet'):
                 predictedClass=getClass.load_image(image_path,DN_model)
                 bestClass = getBestClass(predictedClass)
                 GradCAM(image_path, DN_model, 'densenet', diseaseToClassMap[bestClass])
