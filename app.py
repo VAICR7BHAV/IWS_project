@@ -1,10 +1,15 @@
-from flask import Flask,render_template,request
+import math
+
+from flask import Flask, render_template, request, redirect, url_for, json
 import getClass
 import os,keras
 import cv2
 import numpy as np
 from keras.preprocessing import image
 import tensorflow as tf
+from PIL import Image
+import base64
+import io
 from tensorflow.keras.models import load_model
 
 app = Flask(__name__)
@@ -75,12 +80,12 @@ def GradCAM(IMG_PATH, MODEL_PATH, MODEL_NAME,CLASS):
     cam = cv2.applyColorMap(np.uint8(255 * heatmap), cv2.COLORMAP_JET)
     img *= 255.
     output_image = cv2.addWeighted(cv2.cvtColor(img.astype('uint8'), cv2.COLOR_RGB2BGR), 0.7, cam, 1, 0)
-
+    #path_to_put_gradcam=os.getcwd()+'/static/GRADCAM.jpg'
     cv2.imwrite('./GRADCAM.jpg', output_image)
 
 @app.route('/')
 def hello_world():
-    return render_template('firstpage.html')
+    return render_template('firstpage_2.html')
 
 @app.route('/data',methods=['GET','POST'])
 def receiveData():
@@ -106,10 +111,22 @@ def receiveData():
                 GradCAM(image_path, DN_model, 'densenet', diseaseToClassMap[bestClass])
             else:
                 return render_template('Invalid_Profile.html')
+            im = Image.open("GRADCAM.jpg")
+            data = io.BytesIO()
+            im.save(data, "JPEG")
+            encoded_img_data = base64.b64encode(data.getvalue())
+            # return render_template("image_tes.html", img_data=encoded_img_data.decode('utf-8'))
+            temp2D=[['tasks','hours'],['cardiomegaly',math.ceil(predictedClass['cardiomegaly']*100)],
+                    ['consolidation',math.ceil(predictedClass['consolidation']*100)],
+                    ['pneumothorax',math.ceil(predictedClass['pneumothorax']*100)]]
+            tempo=json.dumps(temp2D)
             return render_template('simplpc-4.html',
                                    cardiomegaly=predictedClass['cardiomegaly'],
                                    consolidation=predictedClass['consolidation'],
-                                   pneumothorax=predictedClass['pneumothorax'])
+                                   pneumothorax=predictedClass['pneumothorax'],
+                                   gradcam=encoded_img_data.decode('utf-8'),
+                                   object=tempo
+                                   )
     # except Exception as e:
     #     return e
 

@@ -13,8 +13,17 @@
             margin-left: auto;
             margin-top: 1%;
             margin-bottom: 1%;
-            border: 2px solid rgb(232, 232, 232);
+            border: 2px solid rgb(51, 51, 51);
         }
+
+        .custom {
+  font-family: Georgia;
+  color: rgb(34, 34, 100);
+  font-size:30px;
+   font-weight: 900;
+   text-align: center;
+}
+
 
         .vl {
             border-left: 3px solid rgb(232, 232, 232);
@@ -50,10 +59,11 @@
         div.card {
             border: 0.4em solid rgb(200, 200, 200);
             border-radius: 12px;
-            width: 100%;
+            width: 80%;
+            height: 80%;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
             text-align: center;
-            background-color: rgb(215, 240, 249);
+            background-color: rgb(215, 240, 249,0.8);
         }
 
         div.bar {
@@ -75,6 +85,14 @@
             text-align: center;
             background-color: rgb(215, 240, 249);
         }
+
+        div.card3 {
+  width: 80%;
+  height: 3px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  text-align: center;
+  background-color: rgb(200,200,200,0.8);
+}
 
 
         div.header {
@@ -219,58 +237,56 @@
     </style>
 </head>
 
-<body>
+<body style="background-image: url('https://galusaustralis.com/wp-content/uploads/2020/09/%EF%BB%BFAI-in-Medical-Imaging-Diagnosis.png');">
+
 <center>
     <span class="mu-header-dot"></span>
     <br>
+    <div class='card'>
+    <div class='row'>
+      <br>
+      <br>
+      <p class="custom">GRAD-CAM Visualization</p>
+      <img src="data:image/jpeg;base64,{{ gradcam }}" alt="Girl in a jacket" style="width:400px;height:400px;">
+    </div>
+          <br>
+    <hr>
     <div class="row">
-        <div class="col-md-4 col-sm-6">
+            <p class="custom">Class Predictions</p>
             <br>
-            <div class="card">
-                <br>
-                <center>
-                    <div data-preset="bubble" class="ldBar label-center" data-pattern-size="150" data-value="80"
-                         style="width:200px;height:200px"></div>
-                </center>
-                <br>
-                <div class="container2">
-                    <p>{{ cardiomegaly }}</p>
-                    <h4><b>Cardiomegaly</b></h4>
-                </div>
-            </div>
-        </div>
+            <p>{{ cardiomegaly }}</p>
+            <h4><b>Cardiomegaly</b></h4>
 
-        <div class="col-md-4 col-sm-6">
-            <br>
-            <div class="card">
-                <br>
-                <center>
-                    <div data-preset="bubble" class="ldBar label-center" data-pattern-size="150" data-value="70"
-                         style="width:200px;height:200px"></div>
-                </center>
-                <br>
-                <div class="container2">
-                    <p>{{ consolidation }}</p>
-                    <h4><b>Consolidation</b></h4>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 col-sm-6">
-            <br>
-            <div class="card">
-                <br>
-                <center>
-                    <div data-preset="bubble" class="ldBar label-center" data-pattern-size="150" data-value="60"
-                         style="width:200px;height:200px"></div>
-                </center>
-                <br>
-                <div class="container2">
-                    <p>{{ pneumothorax}}</p>
-                    <h4><b>Pneumothorax</b></h4>
-                </div>
-            </div>
-        </div>
+            <p>{{ consolidation }}</p>
+            <h4><b>Consolidation</b></h4>
+
+            <p>{{ pneumothorax}}</p>
+            <h4><b>Pneumothorax</b></h4>
+      </div>
+
+      <div id="piechart"></div>
+
+  		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+		<script type="text/javascript">
+			object = JSON.parse({{ object | tojson }})
+			google.charts.load('current', {'packages':['corechart']});
+			google.charts.setOnLoadCallback(drawChart);
+
+
+function drawChart() {
+  var data = google.visualization.arrayToDataTable(object);
+
+
+  var options = { 'width':400, 'height':400};
+
+
+
+  			var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+  			chart.draw(data, options);
+			}
+		</script>
     </div>
-    </div>
+</center>
 </body>
 </html>
