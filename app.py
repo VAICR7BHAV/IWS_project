@@ -36,7 +36,7 @@ def GradCAM(IMG_PATH, MODEL_PATH, MODEL_NAME,CLASS):
         LAYER_NAME = 'conv5_block16_2_conv'
 
     if (MODEL_NAME == 'resnet'):
-        LAYER_NAME = 'conv5_block3_3_conv'
+        LAYER_NAME = 'conv5_block16_2_conv'
 
     if (MODEL_NAME == 'efficientnet'):
         LAYER_NAME = 'top_conv'
@@ -102,7 +102,7 @@ def receiveData():
                 return render_template('Invalid_Profile.html')
             image_path=os.getcwd()+"/images/"+uploaded_file.filename
             print(image_path,'\n')
-            if(chosen_model=='efficientnet'):
+            if(True):#chosen_model=='efficientnet'):
                 predictedClass=getClass.load_image(image_path,EN_model)
                 bestClass = getBestClass(predictedClass)
                 GradCAM(image_path, EN_model, 'efficientnet', diseaseToClassMap[bestClass])
